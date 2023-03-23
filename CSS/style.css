@@ -1,0 +1,44 @@
+.Cuerpo{
+    background-image: url(../Images/370799.jpg);
+    height: 100vh;
+    width: 100%;
+}
+
+.titulo{
+    font-size: 100px;
+    font-family: 'Cookie', cursive;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    font-weight: normal;
+    text-shadow: 5px 5px 5px grey;
+    color: white;
+    padding: 100px;
+}
+
+.Button-Location{
+    margin: 100px;
+}
+
+.Button1{
+    margin: 1rem 0;
+    width: fit-content;
+    background-color: orange;
+    border-radius: 0.9375em;
+    box-shadow: 0.625em 0.625em 0.9375em 0.3125em rgba(0,0,0,.555);
+    padding: 0.5em 3.1em;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    transition: .5s;
+}
+
+.Button1:hover{
+    font-size: 1.6rem;
+}
+
+.Footer{
+    height: 363px;
+    background-color: #000000;
+}

@@ -1,0 +1,20 @@
+.homeStyle{
+    background-image: url(../Images/seamless-wood3-900x900\ \(1\).png);
+    background-repeat: repeat;
+    background-size: 150px 150px;
+}
+
+.navbar{
+    height: 10vh;
+    background-color: rgb(96, 70, 20);
+}
+
+.carrusel{
+    height: 20vh;
+    background-color: rgb(183, 175, 105);
+}
+
+.cardContainer{
+    width:500px;
+    height: 70vh;
+}
