@@ -1,60 +1,89 @@
-.homeStyle{
-    background-image: url(../Images/seamless-wood3-900x900\ \(1\).png);
-    background-repeat: repeat;
-    background-size: 150px 150px;
+.homeStyle {
+  background-image: url(../Images/seamless-wood3-900x900\ \(1\).png);
+  background-repeat: repeat;
+  background-size: 150px 150px;
 }
 
 .navbar {
-    width: 100%;
-    background-color: #555;
-    overflow: auto;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  
+  width: 100%;
+  background-color: #555;
+  overflow: auto;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar a {
+  float: left;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background-color: #000;
+}
+
+.active {
+  background-color: #ea9822;
+}
+
+@media screen and (max-width: 500px) {
   .navbar a {
-    float: left;
-    padding: 12px;
-    color: white;
-    text-decoration: none;
-    font-size: 17px;
-  }
-  
-  .navbar a:hover {
-    background-color: #000;
-  }
-  
-  .active {
-    background-color: #04AA6D;
-  }
-  
-  @media screen and (max-width: 500px) {
-    .navbar a {
-      float: none;
-      display: block;
-    }
-  }
-
-.carrusel{
-    display: flex;
-    justify-content: space-between;
-    height: 30vh;
-    background-color: rgb(183, 175, 105);
-}
-
-.cardContainer{
-    width:800px;
-    height: 70vh;
-    background-color: white;
-    margin:auto;
-    display: flex;
-    flex-direction: row;
-}
-
-img{
-    border-style: inset;
-    padding: 10px;
-    width: 300px;
-    height: 300px;
+    float: none;
     display: block;
-    margin-right: auto;
+  }
+}
+
+.titulo {
+  display: block;
+  height: 30vh;
+  background-image: url(../Images/back-title.jpg);
+  background-size: cover;
+}
+
+.texto-banner{
+  margin: 0;
+  padding: 100px 0;
+  font-size: 54px;
+  color:#ffffff;
+  text-align: center;
+  font-family: 'Oswald', sans-serif;
+}
+
+.cardContainer {
+  width: 1000px;
+  height: auto;
+  background-color: white;
+  margin: auto;
+  padding: 30px;
+}
+
+.cardImg {
+  border-radius: 180px;
+  border-color: rgb(254, 239, 20);
+  border-style:outset;
+  width: 300px;
+  height: 300px;
+}
+
+.cardImg:hover {
+  border-color:rgb(212, 55, 55);
+  transition: .5s;
+}
+
+.cardText{
+  display: inline-block;
+  vertical-align:top;
+}
+
+.cardTitle{
+  color: #ea9822;
+  font-family: 'Oswald', sans-serif;
+  font-size: 50px;
+  padding-left: 100px;
+}
+
+p{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
 }
