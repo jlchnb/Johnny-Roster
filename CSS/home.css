@@ -9,6 +9,8 @@
   background-color: #555;
   overflow: auto;
   font-family: Arial, Helvetica, sans-serif;
+  justify-content: start;
+  padding: 0px;
 }
 
 .navbar a {
@@ -23,15 +25,8 @@
   background-color: #000;
 }
 
-.active {
+.active2 {
   background-color: #ea9822;
-}
-
-@media screen and (max-width: 500px) {
-  .navbar a {
-    float: none;
-    display: block;
-  }
 }
 
 .titulo {
@@ -43,7 +38,6 @@
 
 .texto-banner{
   margin: 0;
-  padding: 100px 0;
   font-size: 54px;
   color:#ffffff;
   text-align: center;
@@ -86,4 +80,38 @@
 p{
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
+}
+
+@media screen and (max-width: 500px) {
+  .navbar a {
+    float: none;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 1030px) {
+  .cardContainer{
+    width: 500px;
+    transition: 0.5s;
+  }
+  .cardImg{
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .cardContainer{
+    width: 250px;
+  }
+  .cardImg{
+    width: 120px;
+    height: 120px;
+  }
+  .cardTitle{
+    font-size: 20px;
+  }
+  .cardText{
+    font-size: 15px;
+  }
 }
