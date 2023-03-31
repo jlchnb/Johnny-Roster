@@ -2,4 +2,8 @@
 # Proyecto Programacion web 
 
 
-¿qué proyecto y sección?
+Proyecto Comida rapida delivery, grupo 7
+Seccion 009D
+
+Julio Cohen Banda
+Enzo
