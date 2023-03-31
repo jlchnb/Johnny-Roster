@@ -16,8 +16,8 @@
 }
 
 .Button-Location{
-    margin: 100px;
-    padding-left: 300px;
+    margin: 5%;
+    padding-left: 15%;
 }
 
 .Button1{
@@ -40,7 +40,7 @@
 }
 
 .Footer{
-    height: 330px;
+    height: 40vh;
     background-color: #000000;
     display: flex;
     justify-content: space-evenly;
