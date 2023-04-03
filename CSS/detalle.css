@@ -3,7 +3,6 @@
     justify-content: center;
     align-items: center;
     align-content: center;
-    justify-content: center;
     background-image: url('https://res.cloudinary.com/dbepwtmru/image/upload/v1668552203/Swirly_pattern_wallpaper_lktlvs.jpg');
     background-size: cover;
     height: 110vh;
@@ -68,23 +67,13 @@
 @media screen and (max-width: 940px) {
     .subContainer {
         width: 22rem;
-        height: 150rem;
+        height: auto;
     }
 
     .containerDetail {
-        height: 160em;
+        height: 100vh;
         width: 100%;
     }
-
-    .containerComment {
-        position: relative;
-        left: 0;
-        top: 2em;
-        width: fit-content;
-
-    }
-
-
 
     .containerInfo {
         flex-direction: column;
@@ -94,10 +83,4 @@
     .conteinerImage {
         width: 20em;
     }
-
-    .Add {
-        align-items: center;
-        position: sticky;
-    }
-
 }
