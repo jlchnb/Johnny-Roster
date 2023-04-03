@@ -35,8 +35,7 @@ p{
   background-color: #ea9822;
 }
 
-.titulo {
-  display: block;
+.titulo{
   height: 30vh;
   background-image: url(../Images/back-title.jpg);
   background-size: cover;
@@ -51,10 +50,9 @@ p{
 }
 
 .cardContainer {
-  width: 100%;
+  width: 800px;
   height: auto;
   background-color: #ffffff;
-  margin: auto;
   padding: 30px;
 }
 
@@ -67,7 +65,7 @@ p{
 }
 
 .cardImg:hover {
-  border-color:rgb(212, 55, 55);
+  opacity: 60%;
   transition: .5s;
 }
 
@@ -95,11 +93,13 @@ p{
 	background: none;
 }
 .carousel .carousel-indicators {
+  display: flex;
+  flex-direction: column;
 	bottom: auto;
 	top: 50%;
 	left: auto;
-	right: 10px;
-	width: 14px;
+	right: 0%;
+	width: 10%;
 	margin: 0;
 	transform: translateY(-50%);
 }
@@ -141,4 +141,59 @@ p{
 .carousel .carousel-inner>.item>img {
 	width: 100%;
 	height: auto;
+}
+
+@media screen and (max-width: 1073px) {
+  .cardContainer{
+    width: 620px;
+    height: 200px;
+  }
+  .cardTitle{
+    font-size: 35px;
+  }
+  .cardImg{
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media screen and (max-width: 738px){
+  .cardContainer{
+    width: 400px;
+    height: 150px;
+  }
+  .cardTitle{
+    font-size: 30px;
+    padding-left: 0px;
+  }
+}
+
+@media screen and (max-width: 515px){
+  .navbar{
+    width: 100%;
+  }
+  .texto-banner{
+    font-size: 50px;
+    padding-top: 10%;
+  }
+  .cardContainer{
+    width: 100%;
+    height: 150px;
+  }
+  #carousel-example-generic{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 400px){
+  .navbar p{
+    font-size: 12px;
+  }
+  .navbar{
+    width: 375px;
+    height: 10vh;
+  }
+  .titulo{
+    font-size: 10px;
+  }
 }
