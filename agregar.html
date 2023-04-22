@@ -27,9 +27,8 @@
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <img src="./Images/Logo-black.png" alt="logotipo" width="60px" height="50px">
-            <a class="navbar-brand px-3">Admin<i class="fa fa-fw fa-user"
-                    aria-hidden="true"></i></a>
+            <a href="Index.html"><img src="./Images/Logo-black.png" alt="logotipo" width="60px" height="50px"></a>
+            <a class="navbar-brand px-3">Admin<i class="fa fa-fw fa-user" aria-hidden="true"></i></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -66,11 +65,12 @@
             </div>
         </div>
     </nav>
-    <section class="agregar-container">     
+    <section class="agregar-container">
         <form class="agregar-form">
             <h1>Agregar Producto</h1>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre"><br><br>
+            <label for="name">Nombre:</label>
+            <input type="name" id="name" name="name"><br>
+            <span id="valida_name"></span><br><br>
 
             <label for="imagen">Imagen:</label>
             <input type="file" id="imagen" name="imagen"><br><br>
@@ -85,9 +85,10 @@
                 <option value="vegetariana">Vegetariana</option>
             </select><br><br>
             <label for="precio">Precio:</label>
-            <input type="number" id="precio" name="precio"><br><br>
+            <input type="precio" id="precio" name="precio"><br>
+            <span id="valida_precio"></span><br><br><br>
 
-            <input type="submit" value="Agregar">
+            <button type="button" onclick="validar()">Enviar</button>
         </form>
     </section>
     <script>
@@ -107,6 +108,27 @@
             imagenPreview.src = urlImagen;
         });
     </script>
+    <script>
+        // validacion 
+        function validar() {
+            var usu, pass, text;
+            name = document.getElementById("name").value;
+            price = document.getElementById("precio").value;
+
+            if (name.length == 0) {
+                text = "Nombre no debe estar vacío !";
+            } else {
+                text = "";
+            }
+            document.getElementById("valida_name").innerHTML = text;
+            if (price.length != 4) {
+                text = "El precio debe ser sobre mayor a 3 digitos !";
+            } else {
+                text = "";
+            }
+            document.getElementById("valida_precio").innerHTML = text;
+        }
+    </script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
@@ -116,4 +138,5 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
 </body>
+
 </html>
