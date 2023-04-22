@@ -6,5 +6,3 @@ Proyecto Comida rapida delivery, grupo 7
 Seccion 009D
 
 Julio Cohen Banda
-Enzo  Elias Santibañez
-
