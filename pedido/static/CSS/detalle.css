@@ -1,0 +1,86 @@
+.containerDetail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background-image: url('https://res.cloudinary.com/dbepwtmru/image/upload/v1668552203/Swirly_pattern_wallpaper_lktlvs.jpg');
+    background-size: cover;
+    height: 110vh;
+    width: 100%;
+    text-decoration: none;
+    padding: 1em;
+}
+
+.subContainer {
+    background-color: rgba(43, 42, 40, 0.505);
+    border-radius: 2em;
+    height: 50vh;
+    width: 80rem;
+    padding: 8px;
+}
+
+.conteinerImage {
+    border-radius: 5px;
+    object-fit: cover;
+    width: 100%;
+    padding: 0;
+    align-items: center;
+}
+
+.foodImage {
+    height: 100%;
+    width: 70%;
+    object-fit: cover;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.containerInfo {
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    padding: 1rem;
+    max-width: 1200px;
+    max-height: 100%;
+    padding-left: 5%;
+    font-size: large;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.containerInfo h2 {
+    text-decoration: underline;
+    font-style: italic;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: left;
+    padding: 0;
+}
+
+.containerInfo p {
+    margin: 0.6rem;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.cont {
+    padding: 0;
+}
+
+@media screen and (max-width: 940px) {
+    .subContainer {
+        width: 22rem;
+        height: auto;
+    }
+
+    .containerDetail {
+        height: 100vh;
+        width: 100%;
+    }
+
+    .containerInfo {
+        flex-direction: column;
+
+    }
+
+    .conteinerImage {
+        width: 20em;
+    }
+}

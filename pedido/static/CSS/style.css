@@ -1,0 +1,138 @@
+.Cuerpo{
+    background-image: url(../Images/fondo1.jpg);
+    height: 100vh;
+    width: 100%;
+}
+
+.titulo{
+    font-size: 100px;
+    font-family: 'Cookie', cursive;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    font-weight: normal;
+    text-shadow: 5px 5px 5px grey;
+    color: white;
+    padding: 100px;
+}
+
+.Button-Location{
+    margin: 5%;
+    padding-left: 15%;
+}
+
+.Button1{
+    margin: 1rem 0;
+    width: fit-content;
+    background-color: rgb(253, 165, 0);
+    border-radius: 0.9375em;
+    box-shadow: 0.625em 0.625em 0.9375em 0.3125em rgba(0,0,0,.555);
+    padding: 0.5em 3.1em;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    transition: .5s;
+}
+
+.Button1:hover{
+    font-size: 1.6rem;
+}
+
+.Footer{
+    width: 100%;
+    height: 40vh;
+    background-color: #000000;
+    display: flex;
+    justify-content: space-evenly;
+    color: white;
+}
+
+
+.boton-1{
+    display: flex;
+}
+
+.btn-1{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    overflow: hidden;
+    position: relative;
+    left: 50%;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: 
+    0 0 0 0 rgba(143, 64, 248, 0.5),
+    0 0 0 0 rgba(39, 200, 255, 0.5),
+    ;
+    transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.footerImg{
+    width: 350px; 
+    height: 300px;
+}
+
+.contacto{
+    color: white;
+}
+
+@media screen and (max-width: 946px) {
+    .Footer{
+        height: 35vh;
+    }
+
+    .footerImg{
+        width: 270px;
+        height: 250px;
+    }
+}
+
+@media screen and (max-width: 789px){
+    .footerImg{
+        width: 200px;
+        height: 210px;
+    }
+    .Footer i{
+        font-size: 3rem;
+    }
+    .contacto{
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 623px) {
+    .titulo{
+        font-size:60px;
+    }
+    .footerImg{
+        width: 150px;
+        height: 130px;
+    }
+    .textoFooter{
+        padding: 0px;
+        font-size: 25px;
+    }
+    .Footer{
+        height: 20vh;
+    }
+    
+}
+
+@media screen and (max-width: 447px) {
+    .titulo{
+        font-size: 50px;
+        padding: 15%;
+    }
+    .footerImg{
+        width: 100px;
+        height: 100px;
+    }
+    .Footer img{
+        display: none;
+    }
+}
