@@ -1,3 +1,4 @@
+{% load static%}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,9 +12,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <!-- Importamos nuestro CSS local -->
-  <link rel="stylesheet" href="../../static/CSS/home.css">
-  <link rel="stylesheet" href="../../static//CSS/global.css">
-  <link rel="stylesheet" href="../../static//CSS/style.css">
+  <link rel="stylesheet" href="% static 'CSS/home.css' %">
+  <link rel="stylesheet" href="% static 'CSS/global.css' %">
+  <link rel="stylesheet" href="% static 'CSS/style.css' %">
   <!-- Importamos iconos para html basicos de font-awesome 4.7.0: -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Importamos google fonts: -->
@@ -30,7 +31,7 @@
       <!-- NavBar -->
       <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a href="index.html"><img src="../../static/Images/Logo-black.png" alt="logotipo" width="60px" height="50px"></a>
+            <a href="../pedido/index.html"><img src="{% static '../../static/Images/Logo-black.png' %}" alt="logotipo" width="60px" height="50px"></a>
           <a class="navbar-brand px-3" href="sesion.html">Registrarse<i class="fa fa-fw fa-sign-in" aria-hidden="true"></i></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -69,23 +70,6 @@
           </div>
         </div>
       </nav>
-      <!-- Nav bar antiguo -->
-      <!-- <div class="navbar navbar-fixed-top">
-                <a class="active2" href="Index.html">
-                    <p><i class="fa fa-fw fa-home"></i>Principal</p>
-                </a>
-                <a href="menu.html">
-                    <p><i class="fa fa-fw fa-cutlery" aria-hidden="true"></i> Menu</p>
-                </a>
-                <a
-                    href="https://api.whatsapp.com/send/?phone=56963865863&text=Hola+amigos%21+%EF%BF%BD&type=phone_number&app_absent=0">
-                    <p><i class="fa fa-fw fa-whatsapp" aria-hidden="true"></i> Contacto</p>
-                </a>
-                <a href="https://www.pedidosya.cl/restaurantes/vina-del-mar/johnny-roster-menu">
-                    <p><i class="fa fa-fw fa-shopping-cart" aria-hidden="true"></i> Carrito</p>
-                </a>
-            </div> -->
-
       <!-- Header -->
       <div class="titulo">
         <h1 class="texto-banner">HAMBURGUESAS</h1>
@@ -100,20 +84,20 @@
           </div>
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="../../static/Images/1366_2000.jpg" alt="Los Angeles" class="carrouselimg d-block" style="width:100%">
+              <img src="{% static '../../static/Images/1366_2000.jpg' %}" alt="Los Angeles" class="carrouselimg d-block" style="width:100%">
               <div class="carousel-caption">
                 <h3>Las buenas burgers están acá</h3>
               </div>
             </div>
             <div class="carousel-item">
-              <img src="../../static/Images/Tipos-de-hamburguesas.jpg" alt="Chicago" class="carrouselimg d-block"
+              <img src="{% static '../../static/Images/Tipos-de-hamburguesas.jpg' %}" alt="Chicago" class="carrouselimg d-block"
                 style="width:100%">
               <div class="carousel-caption">
                 <h3>Opciones vegetarianas</h3>
               </div>
             </div>
             <div class="carousel-item">
-              <img src="../../static/Images/hamburguesas.jpg" alt="New York" class="carrouselimg d-block" style="width:100%">
+              <img src="{% static '../../static/Images/hamburguesas.jpg' %}" alt="New York" class="carrouselimg d-block" style="width:100%">
               <div class="carousel-caption">
                 <h3>Para toda la familia</h3>
               </div>
@@ -132,16 +116,16 @@
       <h1 class="display-1 text-center pt-5">Broaster Burgers</h1>
       <div class="container-08 padding-gral d-flex flex-row">
         <div>
-          <a href="tercio-de-libra.html"><img class="cardImg" src="../../static/Images/Original Broaster.jpeg" alt="Burgir"></a>
+          <a href="tercio-de-libra.html"><img class="cardImg" src="{% static '../../static/Images/Original Broaster.jpeg' %}" alt="Burgir"></a>
           <h2 class="card-title text-center">Original Broaster</h2>
         </div>
         <div>
-          <a href="onion-bacon.html"><img class="cardImg" src="../../static/Images/Broaster Honey.jpeg" alt="Burgir"></a>
+          <a href="onion-bacon.html"><img class="cardImg" src="{% static '../../static/Images/Broaster Honey.jpeg' %}" alt="Burgir"></a>
 
           <h2 class="card-title text-center">Broaster Honey</h2>
         </div>
         <div>
-          <a href="vegetarian.html"><img class="cardImg" src="../../static/Images/Broaster Bacon.jpeg" alt="Burgir"></a>
+          <a href="vegetarian.html"><img class="cardImg" src="{% static '../../static/Images/Broaster Bacon.jpeg' %}" alt="Burgir"></a>
           <h2 class="card-title text-center">Broaster Bacon</h2>
         </div>
       </div>
@@ -150,15 +134,15 @@
       <h1 class="display-1 text-center pt-5">100% Carne Burgers</h1>
       <div class="container-08 padding-gral d-flex flex-row">
         <div>
-          <a href="tercio-de-libra.html"><img class="cardImg mx-auto d-block" src="../../static/Images/Burger Clasic.jpeg" alt="Burgir"></a>
+          <a href="tercio-de-libra.html"><img class="cardImg mx-auto d-block" src="{% static '../../static/Images/Burger Clasic.jpeg' %}" alt="Burgir"></a>
           <h2 class="card-title text-center">Burger Clasic</h2>
         </div>
         <div>
-          <a href="onion-bacon.html"><img class="cardImg mx-auto d-block" src="../../static/Images/Onion Bacon.jpeg" alt="Burgir"></a>
+          <a href="onion-bacon.html"><img class="cardImg mx-auto d-block" src="{% static '../../static/Images/Onion Bacon.jpeg' %}" alt="Burgir"></a>
           <h2 class="card-title text-center">Onion Bacon</h1>
         </div>
         <div>
-          <a href="vegetarian.html"><img class="cardImg mx-auto d-block" src="../../static/Images/Original Blue cheese.jpeg" alt="Burgir"></a>
+          <a href="vegetarian.html"><img class="cardImg mx-auto d-block" src="{% static '../../static/Images/Original Blue cheese.jpeg' %}" alt="Burgir"></a>
           <h2 class="card-title text-center">Original Blue Cheese</h1>
         </div>
       </div>
