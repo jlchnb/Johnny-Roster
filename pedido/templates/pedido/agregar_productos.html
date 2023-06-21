@@ -1,15 +1,16 @@
+{% load static%}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <link rel="icon" href="./Images/Logo-black.png">
+    <link rel="icon" href="../../static/Images/Logo-black.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="CSS/home.css">
+    <link rel="stylesheet" href="{% static 'CSS/home.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
@@ -66,30 +67,30 @@
         </div>
     </nav>
     <section class="agregar-container">
-        <form class="agregar-form">
+        <form class="agregar-form" method="POST" action="{% url 'agregar_productos' %}" enctype="multipart/form-data">
+            {% csrf_token %}
             <h1 class="agregar-titulo">Agregar Producto</h1>
             <label for="nombre">Nombre:</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre">
-                    <span class="error">Nombre no puede ir vacio</span><br>
-
+            <input type="text" class="form-control" id="nombre" name="nombre">
+            <span class="error">Nombre no puede ir vacio</span><br>
+        
             <label for="imagen">Imagen:</label>
             <input type="file" id="imagen" accept="image/png, image/gif, image/jpeg" name="imagen"><br><br>
-
-            <label for="imagen-preview"></label>
-            <img id="imagen-preview"><br><br>
-
-            <label for="tipo">Tipo de comida:</label>
-            <select id="tipo" name="tipo">
+        
+            <label for="tipo_comida">Tipo de comida:</label>
+            <select id="tipo_comida" name="tipo_comida">
                 <option value="broaster">Broaster</option>
                 <option value="carne">100% carne</option>
                 <option value="vegetariana">Vegetariana</option>
+                <option value="acompanamiento">Acompañamiento</option>
             </select><br><br>
+            
             <label for="precio">Precio:</label>
-            <input type="text" class="form-control" id="precio" name="precio">
-            <span class="error2">El precio debe ser mayor a 3 digitos</span><br>
-
-            <button type="button" id="enviar" name="enviar" onclick="validar()">Enviar</button>
-        </form>
+            <input type="number" class="form-control" id="precio" name="precio">
+            <span class="error2">El precio debe ser mayor a 3 dígitos</span><br>
+        
+            <button type="submit" id="enviar" name="enviar">Enviar</button>
+        </form>        
     </section>
     <script>
         // Obtener el campo de imagen y la visualización de la imagen
@@ -116,6 +117,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
-    <script src="./JS/jquery.js"></script>
+    <script src="../../static/JS/jquery.js"></script>
 </body>
 </html>

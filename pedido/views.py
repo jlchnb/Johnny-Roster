@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from pedido.models import Producto, Pedido
+from pedido.models import Producto, Orden, Usuario
 
 # Create your views here.
 def inicio(request):
@@ -7,15 +7,39 @@ def inicio(request):
     return render(request, 'pedido/index.html',context)
 
 def lista_productos(request):
-    lista_productos = Producto.objects.raw("SELECT * FROM venta_producto") #select * from Producto
+    lista_productos = Producto.objects.raw("SELECT * FROM pedido_producto") #select * from Producto
     context={"producto":lista_productos}
     return render(request,'pedido/index.html',context)
 
 def agregar_productos(request):
     if request.method != "POST":
+        lista_productos = Producto.objects.all()
+        context = {"producto": lista_productos}
+        return render(request, 'pedido/agregar_productos.html', context)
+    else:
+        # Rescatamos en variables los valores del formulario (name)
+        nombre = request.POST["nombre"]
+        imagen = request.FILES["imagen"]
+        tipo_comida = request.POST["tipo_comida"]
+        precio = request.POST["precio"]
+
+        # Crear objeto Producto
+        producto = Producto.objects.create(
+            nombre=nombre,
+            imagen=imagen,
+            tipo_comida=tipo_comida,
+            precio=precio
+        )
+
+        producto.save()  # Insertar en la base de datos
+        lista_productos = Producto.objects.all()
+        context = {"mensaje": "Se agregó el producto", "producto": lista_productos}
+        return render(request, 'pedido/agregar_productos.html', context)
+
+    if request.method != "POST":
         lista_productoss = Producto.objects.all()
         context={"producto":lista_productoss}
-        return render(request,'venta/producto_add.html',context)
+        return render(request,'pedido/agregar.html',context)
     else:
         #rescatamos en variables os valores del formulario (name)
         rut = request.POST["rut"]
@@ -30,7 +54,7 @@ def agregar_productos(request):
 
         objGenero = Producto.objects.get(id_productos = productos)
         #crea producto (izp:nombre del campo de la BD, derecho:variable local)
-        objAlumno = Producto.objects.create(  
+        objProducto = Producto.objects.create(  
             rut              = rut,
             nombre           = nombre,
             apellido_paterno = ape_Pat,
@@ -42,7 +66,7 @@ def agregar_productos(request):
             direccion        = direccion,
             activo           = 1)
         
-        objAlumno.save() #insert en la base de datos
+        objProducto.save() #insert en la base de datos
         lista_productoss = Producto.objects.all()
         context = {"mensaje":"Se guardó producto","producto":lista_productoss}
         return render(request,'venta/producto_add.html',context)
@@ -89,19 +113,19 @@ def actualizar_productos(request):
 
         objGenero = Producto.objects.get(id_productos = productos)
         #crea producto (izp:nombre del campo de la BD, derecho:variable local)
-        objAlumno = Producto()
-        objAlumno.rut              = rut
-        objAlumno.nombre           = nombre
-        objAlumno.apellido_paterno = ape_Pat
-        objAlumno.apellido_materno = ape_Mat
-        objAlumno.fecha_nacimiento = fec_Nac
-        objAlumno.id_productos        = objGenero
-        objAlumno.telefono         = telefono
-        objAlumno.email            = email
-        objAlumno.direccion        = direccion
-        objAlumno.activo           = 1
+        objProducto = Producto()
+        objProducto.rut              = rut
+        objProducto.nombre           = nombre
+        objProducto.apellido_paterno = ape_Pat
+        objProducto.apellido_materno = ape_Mat
+        objProducto.fecha_nacimiento = fec_Nac
+        objProducto.id_productos        = objGenero
+        objProducto.telefono         = telefono
+        objProducto.email            = email
+        objProducto.direccion        = direccion
+        objProducto.activo           = 1
         
-        objAlumno.save() #update en la base de datos
+        objProducto.save() #update en la base de datos
         lista_productoss = Producto.objects.all()
         context = {"mensaje":"Se actualizó producto","producto":lista_productoss}
         return render(request,'venta/producto_edit.html',context)
@@ -111,11 +135,11 @@ def actualizar_productos(request):
         return render(request,'venta/index.html',context)
 
 def crud(request):
-    pedidos = Pedido.objects.all()
-    context = {'pedidos': pedidos}
-    return render(request, 'pedidos/pedidos_list.html', context)
+    Ordenes = Orden.objects.all()
+    context = {'Ordenes': Ordenes}
+    return render(request, 'pedidos/Ordenes_list.html', context)
 
 def mostrar_productoss(request):
-    lista_producto = Pedido.objects.all()
+    lista_producto = Orden.objects.all()
     context = {"producto":lista_producto}
     return render(request, 'pedido/productos',context)
