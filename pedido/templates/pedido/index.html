@@ -32,7 +32,7 @@
       <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a href="../pedido/index.html"><img src="{% static '../../static/Images/Logo-black.png' %}" alt="logotipo" width="60px" height="50px"></a>
-          <a class="navbar-brand px-3" href="sesion.html">Registrarse<i class="fa fa-fw fa-sign-in" aria-hidden="true"></i></a>
+          <a class="navbar-brand px-3" href="{% url 'agregar_usuario' %}">Registrarse<i class="fa fa-fw fa-sign-in" aria-hidden="true"></i></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -41,7 +41,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">Principal<i class="fa fa-fw fa-home"></i></a>
+                <a class="nav-link active" aria-disabled="true" href="index.html">Principal<i class="fa fa-fw fa-home"></i></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Contacto<i class="fa fa-fw fa-envelope" aria-hidden="true"></i></a>

@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from pedido.models import Producto, Orden, Usuario
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 def inicio(request):
@@ -36,41 +37,28 @@ def agregar_productos(request):
         context = {"mensaje": "Se agregó el producto", "producto": lista_productos}
         return render(request, 'pedido/agregar_productos.html', context)
 
-    if request.method != "POST":
-        lista_productoss = Producto.objects.all()
-        context={"producto":lista_productoss}
-        return render(request,'pedido/agregar.html',context)
-    else:
-        #rescatamos en variables os valores del formulario (name)
-        rut = request.POST["rut"]
-        nombre = request.POST["nombre"]
-        ape_Pat = request.POST["apePat"]
-        ape_Mat = request.POST["apeMat"]
-        fec_Nac = request.POST["fecNac"]
-        productos = request.POST["productos"]
-        telefono = request.POST["telefono"]
-        email = request.POST["email"]
-        direccion = request.POST["direccion"]
+def iniciar_sesion(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect('inicio')  # Reemplaza 'inicio' con la URL a la que deseas redirigir después del inicio de sesión exitoso
+        else:
+            error_message = 'Credenciales inválidas. Por favor, intenta nuevamente.'
+    
+    return render(request, 'iniciar_sesion.html', {'error_message': error_message})
+    
 
-        objGenero = Producto.objects.get(id_productos = productos)
-        #crea producto (izp:nombre del campo de la BD, derecho:variable local)
-        objProducto = Producto.objects.create(  
-            rut              = rut,
-            nombre           = nombre,
-            apellido_paterno = ape_Pat,
-            apellido_materno = ape_Mat,
-            fecha_nacimiento = fec_Nac,
-            id_productos        = objGenero,
-            telefono         = telefono,
-            email            = email,
-            direccion        = direccion,
-            activo           = 1)
-        
-        objProducto.save() #insert en la base de datos
-        lista_productoss = Producto.objects.all()
-        context = {"mensaje":"Se guardó producto","producto":lista_productoss}
-        return render(request,'venta/producto_add.html',context)
-        
+
+
+
+
+
+
+
 def eliminar_productos(request,pk):
     
     try:

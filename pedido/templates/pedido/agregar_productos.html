@@ -28,7 +28,7 @@
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a href="Index.html"><img src="./Images/Logo-black.png" alt="logotipo" width="60px" height="50px"></a>
+            <a href="Index.html"><img src="{% static '../../static/Images/Logo-black.png' %}" alt="logotipo" width="60px" height="50px"></a>
             <a class="navbar-brand px-3">Admin<i class="fa fa-fw fa-user" aria-hidden="true"></i></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -38,7 +38,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="Index.html">Principal<i
+                        <a class="nav-link active" aria-current="page" href="{% url '' %}">Principal<i
                                 class="fa fa-fw fa-home"></i></a>
                     </li>
                     <li class="nav-item">
