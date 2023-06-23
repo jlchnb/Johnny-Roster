@@ -12,7 +12,7 @@ class Producto(models.Model):
     )
 
     nombre = models.CharField(max_length=100)
-    imagen = models.ImageField(upload_to='productos/')
+    imagen = models.ImageField(upload_to='')
     tipo_comida = models.CharField(max_length=20, choices=TIPO_COMIDA_CHOICES)
     precio = models.DecimalField(max_digits=6, decimal_places=2)
 

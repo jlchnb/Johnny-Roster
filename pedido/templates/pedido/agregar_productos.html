@@ -28,7 +28,8 @@
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a href="Index.html"><img src="{% static '../../static/Images/Logo-black.png' %}" alt="logotipo" width="60px" height="50px"></a>
+            <a href="Index.html"><img src="{% static 'Images/Logo-black.png' %}" alt="logotipo" width="60px"
+                    height="50px"></a>
             <a class="navbar-brand px-3">Admin<i class="fa fa-fw fa-user" aria-hidden="true"></i></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -67,46 +68,85 @@
         </div>
     </nav>
     <section class="agregar-container">
-        <form class="agregar-form" method="POST" action="{% url 'agregar_productos' %}" enctype="multipart/form-data">
+        <form class="agregar-form" method="POST" action="{% url 'agregar_productos' %}" enctype="multipart/form-data"
+            onsubmit="return validarFormulario()">
             {% csrf_token %}
             <h1 class="agregar-titulo">Agregar Producto</h1>
             <label for="nombre">Nombre:</label>
             <input type="text" class="form-control" id="nombre" name="nombre">
-            <span class="error">Nombre no puede ir vacio</span><br>
-        
+            <span class="error">Nombre no puede ir vacío</span><br>
+
             <label for="imagen">Imagen:</label>
             <input type="file" id="imagen" accept="image/png, image/gif, image/jpeg" name="imagen"><br><br>
-        
+            <img id="imagen-preview" src="{{ producto.imagen.url }}" alt="Vista previa de la imagen" style="display: none;">
+
             <label for="tipo_comida">Tipo de comida:</label>
             <select id="tipo_comida" name="tipo_comida">
+                <option value="" disabled selected>Selecciona una opción</option>
                 <option value="broaster">Broaster</option>
                 <option value="carne">100% carne</option>
                 <option value="vegetariana">Vegetariana</option>
                 <option value="acompanamiento">Acompañamiento</option>
             </select><br><br>
-            
+
             <label for="precio">Precio:</label>
-            <input type="number" class="form-control" id="precio" name="precio">
+            <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input type="number" class="form-control" id="precio" name="precio" min="0">
+            </div>
             <span class="error2">El precio debe ser mayor a 3 dígitos</span><br>
-        
+
             <button type="submit" id="enviar" name="enviar">Enviar</button>
-        </form>        
+            <div id="mensaje-exito" style="display: none;">El producto ha sido agregado.</div>
+        </form>
     </section>
     <script>
-        // Obtener el campo de imagen y la visualización de la imagen
+        function validarFormulario() {
+            const nombre = document.getElementById("nombre").value;
+            const imagen = document.getElementById("imagen").value;
+            const tipoComida = document.getElementById("tipo_comida").value;
+            const precio = document.getElementById("precio").value;
+    
+            if (nombre === "") {
+                alert("Por favor, ingresa un nombre.");
+                return false;
+            }
+    
+            if (imagen === "") {
+                alert("Por favor, selecciona una imagen.");
+                return false;
+            }
+    
+            if (tipoComida === "") {
+                alert("Por favor, selecciona un tipo de comida.");
+                return false;
+            }
+    
+            if (precio < 100) {
+                alert("El precio debe ser mayor a 3 dígitos (mayor a 99).");
+                return false;
+            }
+    
+            // Mostrar el mensaje de éxito
+            alert("El producto ha sido agregado.");
+            return true;
+        }
+    </script>
+    <script>
         const inputImagen = document.getElementById("imagen");
         const imagenPreview = document.getElementById("imagen-preview");
-
-        // Escuchar por cambios en el campo de imagen
+    
         inputImagen.addEventListener("change", () => {
-            // Obtener el archivo de imagen
             const archivoImagen = inputImagen.files[0];
-
-            // Crear un objeto URL con la imagen
-            const urlImagen = URL.createObjectURL(archivoImagen);
-
-            // Mostrar la imagen en la visualización
-            imagenPreview.src = urlImagen;
+    
+            if (archivoImagen) {
+                const urlImagen = URL.createObjectURL(archivoImagen);
+                imagenPreview.src = urlImagen;
+                imagenPreview.style.display = "block";
+            } else {
+                imagenPreview.src = "";
+                imagenPreview.style.display = "none";
+            }
         });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
@@ -119,4 +159,5 @@
         crossorigin="anonymous"></script>
     <script src="../../static/JS/jquery.js"></script>
 </body>
+
 </html>

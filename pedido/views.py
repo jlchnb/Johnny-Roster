@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from pedido.models import Producto, Orden, Usuario
 from django.contrib.auth import authenticate, login
+from django.conf import settings
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+import os
 
 # Create your views here.
 def inicio(request):
@@ -8,14 +12,26 @@ def inicio(request):
     return render(request, 'pedido/index.html',context)
 
 def lista_productos(request):
-    lista_productos = Producto.objects.raw("SELECT * FROM pedido_producto") #select * from Producto
-    context={"producto":lista_productos}
-    return render(request,'pedido/index.html',context)
+    # Obtener los productos agrupados por tipo de comida
+    productos_broaster = Producto.objects.filter(tipo_comida='broaster')
+    productos_carne = Producto.objects.filter(tipo_comida='carne')
+    productos_vegetariana = Producto.objects.filter(tipo_comida='vegetariana')
+    productos_acompanamiento = Producto.objects.filter(tipo_comida='acompanamiento')
+    print(productos_acompanamiento)
+
+    context = {
+        'productos_broaster': productos_broaster,
+        'productos_carne': productos_carne,
+        'productos_vegetariana': productos_vegetariana,
+        'productos_acompanamiento': productos_acompanamiento,
+    }
+
+    return render(request, 'pedido/index.html', context)
 
 def agregar_productos(request):
     if request.method != "POST":
         lista_productos = Producto.objects.all()
-        context = {"producto": lista_productos}
+        context = {"productos": lista_productos}
         return render(request, 'pedido/agregar_productos.html', context)
     else:
         # Rescatamos en variables los valores del formulario (name)
@@ -24,10 +40,18 @@ def agregar_productos(request):
         tipo_comida = request.POST["tipo_comida"]
         precio = request.POST["precio"]
 
+        # Guardar la imagen en la carpeta de media
+        media_root = settings.MEDIA_ROOT
+        nombre_imagen = imagen.name
+        ruta_imagen = os.path.join(media_root, 'productos', nombre_imagen)
+        with open(ruta_imagen, 'wb') as file:
+            for chunk in imagen.chunks():
+                file.write(chunk)
+
         # Crear objeto Producto
         producto = Producto.objects.create(
             nombre=nombre,
-            imagen=imagen,
+            imagen=os.path.join(settings.MEDIA_URL, 'productos', nombre_imagen),
             tipo_comida=tipo_comida,
             precio=precio
         )
@@ -37,7 +61,10 @@ def agregar_productos(request):
         context = {"mensaje": "Se agregó el producto", "producto": lista_productos}
         return render(request, 'pedido/agregar_productos.html', context)
 
+
 def iniciar_sesion(request):
+    error_message = None  # Asignar un valor predeterminado a error_message
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -47,9 +74,9 @@ def iniciar_sesion(request):
             login(request, user)
             return redirect('inicio')  # Reemplaza 'inicio' con la URL a la que deseas redirigir después del inicio de sesión exitoso
         else:
-            error_message = 'Credenciales inválidas. Por favor, intenta nuevamente.'
+            error_message = "Error en el inicio de sesión. Verifica tus credenciales."
     
-    return render(request, 'iniciar_sesion.html', {'error_message': error_message})
+    return render(request, 'pedido/iniciar_sesion.html', {'error_message': error_message})
     
 
 

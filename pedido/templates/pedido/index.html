@@ -32,7 +32,7 @@
       <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a href="../pedido/index.html"><img src="{% static '../../static/Images/Logo-black.png' %}" alt="logotipo" width="60px" height="50px"></a>
-          <a class="navbar-brand px-3" href="{% url 'agregar_usuario' %}">Registrarse<i class="fa fa-fw fa-sign-in" aria-hidden="true"></i></a>
+          <a class="navbar-brand px-3" href="{% url 'iniciar_sesion' %}">Registrarse<i class="fa fa-fw fa-sign-in" aria-hidden="true"></i></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -41,7 +41,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-disabled="true" href="index.html">Principal<i class="fa fa-fw fa-home"></i></a>
+                <a class="nav-link active" aria-disabled="true" href="{% url '' %}">Principal<i class="fa fa-fw fa-home"></i></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Contacto<i class="fa fa-fw fa-envelope" aria-hidden="true"></i></a>
@@ -65,7 +65,9 @@
               </li>
             </ul>
             <form class="d-flex">
-              <button class="btn btn-outline-warning" type="submit"><a href="{% url 'agregar_productos' %}">Agregar</a></button>
+              <button class="btn btn-outline-warning" type="button">
+                <a href="{% url 'agregar_productos' %}">Agregar</a>
+            </button>
             </form>
           </div>
         </div>
@@ -113,41 +115,52 @@
       </div>
       <!-- Contenido de la pagina -->
       <!-- Broaster Burgers -->
-      <h1 class="display-1 text-center pt-5">Broaster Burgers</h1>
-      <div class="container-08 padding-gral d-flex flex-row">
-        <div>
-          <a href="tercio-de-libra.html"><img class="cardImg" src="{% static '../../static/Images/Original Broaster.jpeg' %}" alt="Burgir"></a>
-          <h2 class="card-title text-center">Original Broaster</h2>
-        </div>
-        <div>
-          <a href="onion-bacon.html"><img class="cardImg" src="{% static '../../static/Images/Broaster Honey.jpeg' %}" alt="Burgir"></a>
+<h1 class="display-1 text-center pt-5">Broaster Burgers</h1>
+<div class="container-08 padding-gral d-flex flex-row">
+  {% for producto in productos_broaster %}
+  <div>
+    <a href="tercio-de-libra.html"><img class="cardImg" src="{{ producto.imagen.url }}" alt="Burgir"></a>
+    <h2 class="card-title text-center">{{ producto.nombre }}</h2>
+  </div>
+  {% endfor %}
+</div>
+<h4 class="text-center">ver más</h4>
 
-          <h2 class="card-title text-center">Broaster Honey</h2>
-        </div>
-        <div>
-          <a href="vegetarian.html"><img class="cardImg" src="{% static '../../static/Images/Broaster Bacon.jpeg' %}" alt="Burgir"></a>
-          <h2 class="card-title text-center">Broaster Bacon</h2>
-        </div>
-      </div>
-      <h4 class="text-center">ver más</h4>
-      <!-- 100% Carne -->
-      <h1 class="display-1 text-center pt-5">100% Carne Burgers</h1>
-      <div class="container-08 padding-gral d-flex flex-row">
-        <div>
-          <a href="tercio-de-libra.html"><img class="cardImg mx-auto d-block" src="{% static '../../static/Images/Burger Clasic.jpeg' %}" alt="Burgir"></a>
-          <h2 class="card-title text-center">Burger Clasic</h2>
-        </div>
-        <div>
-          <a href="onion-bacon.html"><img class="cardImg mx-auto d-block" src="{% static '../../static/Images/Onion Bacon.jpeg' %}" alt="Burgir"></a>
-          <h2 class="card-title text-center">Onion Bacon</h1>
-        </div>
-        <div>
-          <a href="vegetarian.html"><img class="cardImg mx-auto d-block" src="{% static '../../static/Images/Original Blue cheese.jpeg' %}" alt="Burgir"></a>
-          <h2 class="card-title text-center">Original Blue Cheese</h1>
-        </div>
-      </div>
-      <h4 class="text-center pb-5">ver más</h4>
-    </div>
+<!-- 100% Carne Burgers -->
+<h1 class="display-1 text-center pt-5">100% Carne Burgers</h1>
+<div class="container-08 padding-gral d-flex flex-row">
+  {% for producto in productos_carne %}
+  <div>
+    <a href="tercio-de-libra.html"><img class="cardImg mx-auto d-block" src="{{ producto.imagen.url }}" alt="Burgir"></a>
+    <h2 class="card-title text-center">{{ producto.nombre }}</h2>
+  </div>
+  {% endfor %}
+</div>
+<h4 class="text-center pb-5">ver más</h4>
+
+<!-- Vegetariana Burgers -->
+<h1 class="display-1 text-center pt-5">Vegetariana Burgers</h1>
+<div class="container-08 padding-gral d-flex flex-row">
+  {% for producto in productos_vegetariana %}
+  <div>
+    <a href="vegetarian.html"><img class="cardImg mx-auto d-block" src="{{ producto.imagen.url }}" alt="Burgir"></a>
+    <h2 class="card-title text-center">{{ producto.nombre }}</h2>
+  </div>
+  {% endfor %}
+</div>
+<h4 class="text-center pb-5">ver más</h4>
+
+<!-- Acompañamiento Burgers -->
+<h1 class="display-1 text-center pt-5">Acompañamiento</h1>
+<div class="container-08 padding-gral d-flex flex-row">
+  {% for producto in productos_acompanamiento %}
+  <div>
+    <a href="..."><img class="cardImg" src="{{ producto.imagen.url }}" alt="Burgir"></a>
+    <h2 class="card-title text-center">{{ producto.nombre }}</h2>
+  </div>
+  {% endfor %}
+</div>
+<h4 class="text-center pb-5">ver más</h4>
     <!-- Footer -->
     <footer class="bg-dark text-center text-white">
       <div class="container p-4">
@@ -183,7 +196,7 @@
       <!-- Copyright -->
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2023 Copyright:
-        <a class="text-white" href="index.html">Johnny-Roster</a>
+        <a class="text-white" href="{% url '' %}">Johnny-Roster</a>
       </div>
     </footer>
     </div>
