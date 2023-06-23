@@ -115,6 +115,39 @@
       </div>
       <!-- Contenido de la pagina -->
       <!-- Broaster Burgers -->
+
+      <h1>Editar Productos</h1><br>
+    <br>
+
+    <button type="button">
+        <a href="{% url 'productos_list' %}">Agregar</a>
+    </button>
+
+    <div id="idMensajes">
+        {% if mensaje %}
+            {{mensaje}}
+        {% endif %}
+    </div>
+    <table>
+        {% if productos %}
+        <th>Nombre</th>
+        <th>Tipo Comida</th>
+        <th>Precio</th>
+        <th>Eliminar</th>
+        <th>Modificar</th>
+        {% for x in alumnos %}
+            <tr>
+                <td> {{x.nombre}}</td>
+                <td> {{x.tipo_comida}}</td>
+                <td> {{x.precio}}</td>
+                <td> <a href="{% url 'productos_del' pk=x.nombre %}">Eliminar</a></td>
+                <td> <a href="{% url 'productos_findEdit' pk=x.nombre %}">Modificar</a></td>
+            </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+
+
 <h1 class="display-1 text-center pt-5">Broaster Burgers</h1>
 <div class="container-08 padding-gral d-flex flex-row">
   {% for producto in productos_broaster %}
@@ -202,6 +235,12 @@
     </div>
   </section>
   <!-- Scripts para que el carrusel funcione -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#idMensajes").delay(2000).fadeOut("slow");
+        });
+    </script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"

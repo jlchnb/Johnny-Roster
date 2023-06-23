@@ -12,21 +12,11 @@ def inicio(request):
     return render(request, 'pedido/index.html',context)
 
 def lista_productos(request):
-    # Obtener los productos agrupados por tipo de comida
-    productos_broaster = Producto.objects.filter(tipo_comida='broaster')
-    productos_carne = Producto.objects.filter(tipo_comida='carne')
-    productos_vegetariana = Producto.objects.filter(tipo_comida='vegetariana')
-    productos_acompanamiento = Producto.objects.filter(tipo_comida='acompanamiento')
-    print(productos_acompanamiento)
-
-    context = {
-        'productos_broaster': productos_broaster,
-        'productos_carne': productos_carne,
-        'productos_vegetariana': productos_vegetariana,
-        'productos_acompanamiento': productos_acompanamiento,
-    }
-
-    return render(request, 'pedido/index.html', context)
+    print("1")
+    lista_productos = Producto.objects.all()
+    print(lista_productos)
+    context={"productos":lista_productos}
+    return render(request, 'pedido/productos_list.html',context)
 
 def agregar_productos(request):
     if request.method != "POST":
@@ -34,7 +24,6 @@ def agregar_productos(request):
         context = {"productos": lista_productos}
         return render(request, 'pedido/agregar_productos.html', context)
     else:
-        # Rescatamos en variables los valores del formulario (name)
         nombre = request.POST["nombre"]
         imagen = request.FILES["imagen"]
         tipo_comida = request.POST["tipo_comida"]
@@ -150,9 +139,9 @@ def actualizar_productos(request):
         return render(request,'venta/index.html',context)
 
 def crud(request):
-    Ordenes = Orden.objects.all()
-    context = {'Ordenes': Ordenes}
-    return render(request, 'pedidos/Ordenes_list.html', context)
+    productos = Producto.objects.all()
+    context = {'productos': productos}
+    return render(request, 'pedidos/productos_list.html', context)
 
 def mostrar_productoss(request):
     lista_producto = Orden.objects.all()

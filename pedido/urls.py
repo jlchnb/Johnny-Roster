@@ -7,7 +7,7 @@ from django.views.static import serve
 
 urlpatterns = [
     path('', views.inicio,name =''),
-    path('lista_productos',views.lista_productos,name='lista_productos'),
+    path('productos_list/',views.lista_productos,name='productos_list'),
     path('agregar_productos/', views.agregar_productos, name='agregar_productos'),
     path('iniciar_sesion/', views.iniciar_sesion, name='iniciar_sesion'),
     path('borrarProducto/<str:pk>',views.eliminar_productos,name='productos_del'),
