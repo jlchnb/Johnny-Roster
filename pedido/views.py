@@ -27,7 +27,8 @@ def agregar_productos(request):
         nombre = request.POST["nombre"]
         imagen = request.FILES["imagen"]
         tipo_comida = request.POST["tipo_comida"]
-        precio = request.POST["precio"]
+        precio = int(request.POST["precio"])
+
 
         # Guardar la imagen en la carpeta de media
         media_root = settings.MEDIA_ROOT
