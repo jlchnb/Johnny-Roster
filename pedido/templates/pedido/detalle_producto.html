@@ -1,0 +1,40 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="../../static/Images/Logo-black.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'CSS/detalle.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/home.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Johnny Roster</title>
+</head>
+
+<body>
+    <div class="head">
+        {% include 'pedido/navbar.html' %}
+        <div class="containerDetail">
+            <div class="subContainer">
+                <div class="containerInfo">
+                    <div class="conteinerImage">
+                        <img class="foodImage" src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+                    </div>
+                    <div class="Cont">
+                        <h2 class="h1 font-weight-bold mb-4 text-white card-title">{{ producto.nombre }}</h2>
+                        <p class="card-text text-white">Precio: ${{ producto.precio }}</p>
+                        <p class="card-text text-white">Tipo de comida: {{ producto.get_tipo_comida_display }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'pedido/footer.html' %}
+</body>
+
+</html>

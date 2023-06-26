@@ -22,6 +22,7 @@
     </div>
     <table>
         {% if productos %}
+        <th>Imagen</th>
         <th>Nombre</th>
         <th>Tipo Comida</th>
         <th>Precio</th>
@@ -29,9 +30,10 @@
         <th>Modificar</th>
         {% for x in productos %}
             <tr>
+                <td><img src="{{x.imagen}}" alt="Imagen del producto" height="50px" width="50px"></td>
                 <td> {{x.nombre}}</td>
                 <td> {{x.tipo_comida}}</td>
-                <td> {{x.precio}}</td>
+                <td> ${{x.precio}}.00</td>
                 <td> <a href="">Eliminar</a></td>
                 <td> <a href="">Modificar</a></td>
             </tr>

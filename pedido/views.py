@@ -1,15 +1,37 @@
-from django.shortcuts import render, redirect
-from pedido.models import Producto, Orden, Usuario
+from django.shortcuts import render, redirect, get_object_or_404
+from pedido.models import Producto, Orden
 from django.contrib.auth import authenticate, login
 from django.conf import settings
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 import os
 
 # Create your views here.
-def inicio(request):
-    context = {}
-    return render(request, 'pedido/index.html',context)
+def inicio_y_lista_productos(request):
+    productos_broaster = Producto.objects.filter(tipo_comida='broaster')
+    productos_carne = Producto.objects.filter(tipo_comida='carne')
+    productos_vegetariana = Producto.objects.filter(tipo_comida='vegetariana')
+    productos_acompanamiento = Producto.objects.filter(tipo_comida='acompanamiento')
+
+    # Convertir los nombres a título
+    for producto in productos_broaster:
+        producto.nombre = producto.nombre.title()
+    for producto in productos_carne:
+        producto.nombre = producto.nombre.title()
+    for producto in productos_vegetariana:
+        producto.nombre = producto.nombre.title()
+    for producto in productos_acompanamiento:
+        producto.nombre = producto.nombre.title()
+
+    context = {
+        "productos_broaster": productos_broaster,
+        "productos_carne": productos_carne,
+        "productos_vegetariana": productos_vegetariana,
+        "productos_acompanamiento": productos_acompanamiento
+    }
+    return render(request, 'pedido/index.html', context)
+
+# def inicio(request):
+#     context = {}
+#     return render(request, 'pedido/index.html',context)
 
 def lista_productos(request):
     print("1")
@@ -68,7 +90,13 @@ def iniciar_sesion(request):
     
     return render(request, 'pedido/iniciar_sesion.html', {'error_message': error_message})
     
+def detalle_producto(request, producto_nombre):
+    producto = get_object_or_404(Producto, nombre=producto_nombre)
 
+    context = {
+        'producto': producto
+    }
+    return render(request, 'pedido/detalle_producto.html', context)
 
 
 

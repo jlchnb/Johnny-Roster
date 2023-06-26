@@ -28,12 +28,12 @@
 }
 
 .foodImage {
-    height: 100%;
-    width: 70%;
-    object-fit: cover;
+    height: auto;
+    width: 100%;
+    object-fit: contain;
     padding: 10px;
     border-radius: 30px;
-}
+  }
 
 .containerInfo {
     display: flex;
