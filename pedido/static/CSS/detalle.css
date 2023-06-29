@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    align-content: center;
     background-image: url('https://res.cloudinary.com/dbepwtmru/image/upload/v1668552203/Swirly_pattern_wallpaper_lktlvs.jpg');
     background-size: cover;
     height: 110vh;
@@ -14,35 +13,41 @@
 .subContainer {
     background-color: rgba(43, 42, 40, 0.505);
     border-radius: 2em;
-    height: 50vh;
-    width: 80rem;
     padding: 8px;
-}
-
-.conteinerImage {
-    border-radius: 5px;
-    object-fit: cover;
-    width: 100%;
-    padding: 0;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    text-align: center;
+    height: 50vh;
+    width: 100%;
 }
 
-.foodImage {
-    height: auto;
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.imageContainer {
     width: 100%;
-    object-fit: contain;
-    padding: 10px;
-    border-radius: 30px;
-  }
+    max-width: 400px;
+}
+
+.imageContainer img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.column > * {
+    margin-bottom: 1rem;
+}
 
 .containerInfo {
-    display: flex;
-    flex-direction: row;
-    text-align: left;
-    padding: 1rem;
     max-width: 1200px;
-    max-height: 100%;
-    padding-left: 5%;
     font-size: large;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
@@ -50,19 +55,11 @@
 .containerInfo h2 {
     text-decoration: underline;
     font-style: italic;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     text-align: left;
-    padding: 0;
+    margin-bottom: 1rem;
 }
 
-.containerInfo p {
-    margin: 0.6rem;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
 
-.cont {
-    padding: 0;
-}
 
 @media screen and (max-width: 940px) {
     .subContainer {

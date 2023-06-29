@@ -20,6 +20,15 @@
             {{mensaje}}
         {% endif %}
     </div>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        
+        td {
+            padding: 10px; 
+        }
+    </style>
     <table>
         {% if productos %}
         <th>Imagen</th>
@@ -30,7 +39,7 @@
         <th>Modificar</th>
         {% for x in productos %}
             <tr>
-                <td><img src="{{x.imagen}}" alt="Imagen del producto" height="50px" width="50px"></td>
+                <td><img src="{{x.imagen.url}}" alt="Imagen del producto" height="50px" width="50px"></td>
                 <td> {{x.nombre}}</td>
                 <td> {{x.tipo_comida}}</td>
                 <td> ${{x.precio}}.00</td>

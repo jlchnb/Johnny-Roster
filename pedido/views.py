@@ -1,42 +1,36 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from pedido.models import Producto, Orden
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import os
 
-# Create your views here.
+@login_required
+def inicio(request):
+    request.session["usuario"]="julio" #lo guardo
+    usuario = request.session.get("usuario", None)
+
+    context = {'usuario':usuario}
+    return render(request, 'pedido/navbar.html', context)
+
 def inicio_y_lista_productos(request):
     productos_broaster = Producto.objects.filter(tipo_comida='broaster')
     productos_carne = Producto.objects.filter(tipo_comida='carne')
     productos_vegetariana = Producto.objects.filter(tipo_comida='vegetariana')
     productos_acompanamiento = Producto.objects.filter(tipo_comida='acompanamiento')
 
-    # Convertir los nombres a título
-    for producto in productos_broaster:
-        producto.nombre = producto.nombre.title()
-    for producto in productos_carne:
-        producto.nombre = producto.nombre.title()
-    for producto in productos_vegetariana:
-        producto.nombre = producto.nombre.title()
-    for producto in productos_acompanamiento:
-        producto.nombre = producto.nombre.title()
-
     context = {
         "productos_broaster": productos_broaster,
         "productos_carne": productos_carne,
         "productos_vegetariana": productos_vegetariana,
-        "productos_acompanamiento": productos_acompanamiento
+        "productos_acompanamiento": productos_acompanamiento,
+        
     }
     return render(request, 'pedido/index.html', context)
 
-# def inicio(request):
-#     context = {}
-#     return render(request, 'pedido/index.html',context)
 
 def lista_productos(request):
-    print("1")
     lista_productos = Producto.objects.all()
-    print(lista_productos)
     context={"productos":lista_productos}
     return render(request, 'pedido/productos_list.html',context)
 
@@ -50,7 +44,6 @@ def agregar_productos(request):
         imagen = request.FILES["imagen"]
         tipo_comida = request.POST["tipo_comida"]
         precio = int(request.POST["precio"])
-
 
         # Guardar la imagen en la carpeta de media
         media_root = settings.MEDIA_ROOT
@@ -97,7 +90,6 @@ def detalle_producto(request, producto_nombre):
         'producto': producto
     }
     return render(request, 'pedido/detalle_producto.html', context)
-
 
 
 
