@@ -47,11 +47,11 @@
                 class="fa fa-fw fa-shopping-cart" aria-hidden="true"></i></a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link " href="{% url 'login' %}" id="navbarDropdown">
+            <a class="nav-link" href="{% url 'login' %}" id="navbarDropdown">
               {% if user.is_authenticated %}
                 Logeado como: {{user.username}}
               {% else %}
-              <a href="{% url 'login' %}">login</a>
+              <a class="nav-link" href="{% url 'login' %}">login</a>
               {% endif %}
               <i class="fa fa-fw fa-sign-in" aria-hidden="true"></i></a>
             </div>
