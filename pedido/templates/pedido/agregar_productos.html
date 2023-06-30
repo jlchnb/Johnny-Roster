@@ -71,7 +71,7 @@
         <form class="agregar-form" method="POST" action="{% url 'agregar_productos' %}" enctype="multipart/form-data"
             onsubmit="return validarFormulario()">
             {% csrf_token %}
-            <h1 class="agregar-titulo">Agregar Producto</h1>
+            <h1 class="agregar-titulo">Agregar Productos</h1>
             <label for="nombre">Nombre:</label>
             <input type="text" class="form-control" id="nombre" name="nombre">
             <span class="error">Nombre no puede ir vacío</span><br>
@@ -82,11 +82,9 @@
 
             <label for="tipo_comida">Tipo de comida:</label>
             <select id="tipo_comida" name="tipo_comida">
-                <option value="" disabled selected>Selecciona una opción</option>
-                <option value="broaster">Broaster</option>
-                <option value="carne">100% carne</option>
-                <option value="vegetariana">Vegetariana</option>
-                <option value="acompanamiento">Acompañamiento</option>
+                {% for tipoComida in tipoComidas %}
+                    <option value="{{tipoComida.id_tipoComida}}">{{tipoComida.tipo_comida}}</option>
+                {% endfor %}
             </select><br><br>
 
             <label for="precio">Precio:</label>
@@ -96,9 +94,15 @@
             </div>
             <span class="error2">El precio debe ser mayor a 3 dígitos</span><br>
 
-            <button type="submit" id="enviar" name="enviar">Enviar</button>
+            <input type="submit" name="opcion" value="Agregar">
             <div id="mensaje-exito" style="display: none;">El producto ha sido agregado.</div>
         </form>
+        <br><br><br>
+        <div id="idMensajes">
+            {% if mensaje %}
+            {{mensaje}}
+            {% endif %}
+        </div>
     </section>
     <script>
         function validarFormulario() {

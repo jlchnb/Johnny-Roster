@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Productos</title>
+</head>
+
+<body>
+    <div style="text-align: center;">
+        {% if producto %}
+        <h2>Formulario Actualizar Datos</h2><br>
+        <form action="{% url 'actualizar_productos' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <pre>Nombre:   <input type="text" name="nombre" value="{{ producto.nombre }}"></pre>
+            <pre>Precio:   <input type="text" name="precio" value="{{ producto.precio }}"></pre>
+            <pre>Tipo de comida:
+                <select name="tipo_comida">
+                {% for tipo_comida in tipoComidas %}
+
+                    {% if tipo_comida.tipo_comida == producto.id_tipoComida.tipo_comida %}
+                        <option value="{{tipo_comida.id_tipoComida}}" selected>{{tipo_comida.tipo_comida}}</option>
+                    {% else %}
+                        <option value="{{tipo_comida.id_tipoComida}}" >{{tipo_comida.tipo_comida}}</option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </pre>
+            <pre>Imagen:   <input type="file" name="imagen"></pre>
+            <input type="submit" name="opcion" value="Actualizar">
+        </form><br><br>
+        {% endif %}
+        <div id="idMensajes">
+            {% if mensaje %}
+            {{mensaje}}
+            {% endif %}
+        </div>
+        <br><br>
+        <a href="{% url 'crud' %}"> Volver </a>
+    </div>
+</body>
+
+</html>

@@ -9,21 +9,21 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'CSS/home.css' %}">
-    <title>Document</title>
+    <title>Agregar tipoComida</title>
 </head>
 
 <body>
     {% include 'pedido/navbar.html' %}
-    <h1>Editar Datos de Alumnos</h1><br>
+    <h1>Editar Tipos de comida</h1><br>
     <br>
 
     <button type="button">
-        <a href="{% url 'agregar_productos' %}">Agregar un producto</a>
+        <a href="{% url 'TipoComidaAdd' %}">Agregar un tipo de comida</a>
     </button>
 
     <div id="idMensajes">
         {% if mensaje %}
-        {{mensaje}}
+            {{mensaje}}
         {% endif %}
     </div>
     <style>
@@ -36,21 +36,17 @@
         }
     </style>
     <table>
-        {% if productos %}
-        <th>Imagen</th>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Eliminar</th>
-        <th>Modificar</th>
-        {% for x in productos %}
-        <tr>
-            <td><img src="{{x.imagen.url}}" alt="Imagen del producto" height="50px" width="50px"></td>
-            <td> {{x.nombre}}</td>
-            <td> ${{x.precio}}.00</td>
-            <td> <a href="{% url 'productos_del' pk=x.nombre %}">Eliminar</a></td>
-            <td> <a href="{% url 'productos_edit' pk=x.nombre %}">Modificar</a></td>
-        </tr>
-        {% endfor %}
+        {% if TipoComidas %}
+            <th>Nombre</th>
+            <th>Eliminar</th>
+            <th>Modificar</th>
+            {% for x in TipoComidas %}
+            <tr>
+                <td> {{x.tipo_comida}}</td>
+                <td> <a href="{% url 'TipoComida_del' pk=x.id_tipoComida %}">Eliminar</a></td>
+                <td> <a href="{% url 'TipoComida_edit' pk=x.id_tipoComida %}">Modificar</a></td>
+            </tr>
+            {% endfor %}
         {% endif %}
     </table>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>

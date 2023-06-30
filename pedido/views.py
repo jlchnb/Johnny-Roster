@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from pedido.models import Producto, Orden
+from pedido.models import Producto, TipoComida
+from .forms import TipoComidaForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -7,25 +8,15 @@ import os
 
 @login_required
 def inicio(request):
-    request.session["usuario"]="julio" #lo guardo
+    request.session["usuario"]="julio"
     usuario = request.session.get("usuario", None)
 
     context = {'usuario':usuario}
     return render(request, 'pedido/navbar.html', context)
 
 def inicio_y_lista_productos(request):
-    productos_broaster = Producto.objects.filter(tipo_comida='broaster')
-    productos_carne = Producto.objects.filter(tipo_comida='carne')
-    productos_vegetariana = Producto.objects.filter(tipo_comida='vegetariana')
-    productos_acompanamiento = Producto.objects.filter(tipo_comida='acompanamiento')
-
-    context = {
-        "productos_broaster": productos_broaster,
-        "productos_carne": productos_carne,
-        "productos_vegetariana": productos_vegetariana,
-        "productos_acompanamiento": productos_acompanamiento,
-        
-    }
+    lista_productos = Producto.objects.all()
+    context={"lista_productos":lista_productos}
     return render(request, 'pedido/index.html', context)
 
 
@@ -36,16 +27,20 @@ def lista_productos(request):
 
 def agregar_productos(request):
     if request.method != "POST":
-        lista_productos = Producto.objects.all()
-        context = {"productos": lista_productos}
+        print(request.POST)
+        tipoComidas=TipoComida.objects.all()
+        context={'tipoComidas':tipoComidas}
         return render(request, 'pedido/agregar_productos.html', context)
+
+
     else:
+        print(request.POST)
         nombre = request.POST["nombre"]
         imagen = request.FILES["imagen"]
         tipo_comida = request.POST["tipo_comida"]
         precio = int(request.POST["precio"])
+        activo="1"
 
-        # Guardar la imagen en la carpeta de media
         media_root = settings.MEDIA_ROOT
         nombre_imagen = imagen.name
         ruta_imagen = os.path.join(media_root, 'productos', nombre_imagen)
@@ -53,22 +48,22 @@ def agregar_productos(request):
             for chunk in imagen.chunks():
                 file.write(chunk)
 
-        # Crear objeto Producto
-        producto = Producto.objects.create(
+        objTipoComida=TipoComida.objects.get(id_tipoComida = tipo_comida)
+        obj = Producto.objects.create(
             nombre=nombre,
             imagen=os.path.join(settings.MEDIA_URL, 'productos', nombre_imagen),
-            tipo_comida=tipo_comida,
-            precio=precio
+            id_tipoComida=objTipoComida,
+            precio=precio,
+            activo=1
         )
-
-        producto.save()  # Insertar en la base de datos
-        lista_productos = Producto.objects.all()
-        context = {"mensaje": "Se agregó el producto", "producto": lista_productos}
+        print(request.POST)
+        obj.save()
+        context = {"mensaje": "Se agregó el producto"}
         return render(request, 'pedido/agregar_productos.html', context)
 
 
 def iniciar_sesion(request):
-    error_message = None  # Asignar un valor predeterminado a error_message
+    error_message = None
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -77,7 +72,7 @@ def iniciar_sesion(request):
         
         if user is not None:
             login(request, user)
-            return redirect('inicio')  # Reemplaza 'inicio' con la URL a la que deseas redirigir después del inicio de sesión exitoso
+            return redirect('inicio')
         else:
             error_message = "Error en el inicio de sesión. Verifica tus credenciales."
     
@@ -85,86 +80,147 @@ def iniciar_sesion(request):
     
 def detalle_producto(request, producto_nombre):
     producto = get_object_or_404(Producto, nombre=producto_nombre)
+    choices_tipo_comida = TipoComida.objects.all()  # Obtener todos los objetos de TipoComida
 
     context = {
-        'producto': producto
+        'producto': producto,
+        'choices_tipo_comida': choices_tipo_comida,
     }
     return render(request, 'pedido/detalle_producto.html', context)
 
-
-
-
-
-
-def eliminar_productos(request,pk):
-    
+def productos_del(request,pk):
+    context={}
     try:
-        producto = Producto.objects.get(rut=pk)
+        producto = Producto.objects.get(nombre=pk)
 
-        producto.delete() #delete en la BD
-        mensaje = "Se eliminó producto"
+        producto.delete()
+        mensaje = "Se eliminó el producto"
         lista_productos = Producto.objects.all()
-        context={"productos":lista_productos, "mensaje":mensaje}
-        return render(request,'venta/index.html',context)
+        context={"lista_productos":lista_productos, "mensaje":mensaje}
+        return render(request,'pedido/productos_list.html',context)
     except:
-        mensaje = "NO se eliminó producto"
+        mensaje = "Error: NO se eliminó producto"
         lista_productos = Producto.objects.all()
-        context={"productos":lista_productos, "mensaje":mensaje}
-        return render(request,'venta/index.html',context)
+        context={"lista_productos":lista_productos, "mensaje":mensaje}
+        return render(request,'pedido/productos_list.html',context)
     
-def buscar_productos(request,pk):
+def productos_edit(request,pk):
+
     if pk != "":
-        producto = Producto.objects.get(rut=pk)
-        lista_productoss = Producto.objects.all()
-        context={"producto":producto, "producto":lista_productoss}
+        producto    = Producto.objects.get(nombre=pk)
+        tipoComidas = TipoComida.objects.all()
+
+        context={"producto":producto, "tipoComidas":tipoComidas}
         if producto:
-            return render(request,'venta/producto_edit.html',context)
+            return render(request,'pedido/productos_edit.html',context)
         else:
             context = {"mensaje":"El producto no existe"}
-            return render(request,'venta/index.html',context)
+            return render(request,'pedido/productos_edit.html',context)
         
 def actualizar_productos(request):
-    if request.method == "POST":
-        #rescatamos en variables los valores del formulario (name)
-        rut = request.POST["rut"]
-        nombre = request.POST["nombre"]
-        ape_Pat = request.POST["apePat"]
-        ape_Mat = request.POST["apeMat"]
-        fec_Nac = request.POST["fecNac"]
-        productos = request.POST["productos"]
-        telefono = request.POST["telefono"]
-        email = request.POST["email"]
-        direccion = request.POST["direccion"]
 
-        objGenero = Producto.objects.get(id_productos = productos)
-        #crea producto (izp:nombre del campo de la BD, derecho:variable local)
-        objProducto = Producto()
-        objProducto.rut              = rut
-        objProducto.nombre           = nombre
-        objProducto.apellido_paterno = ape_Pat
-        objProducto.apellido_materno = ape_Mat
-        objProducto.fecha_nacimiento = fec_Nac
-        objProducto.id_productos        = objGenero
-        objProducto.telefono         = telefono
-        objProducto.email            = email
-        objProducto.direccion        = direccion
-        objProducto.activo           = 1
-        
-        objProducto.save() #update en la base de datos
-        lista_productoss = Producto.objects.all()
-        context = {"mensaje":"Se actualizó producto","producto":lista_productoss}
-        return render(request,'venta/producto_edit.html',context)
+    if request.method == "POST":
+
+        nombre = request.POST["nombre"]
+        precio = request.POST["precio"]
+        tipo_comida = request.POST["tipo_comida"]
+        activo = "1"
+
+        objTipoComida=TipoComida.objects.get(id_tipoComida = tipo_comida)
+
+        producto = Producto()
+        producto.nombre = nombre
+        producto.precio = precio
+        producto.id_tipoComida = objTipoComida
+        producto.activo = 1
+
+        if 'imagen' in request.FILES:
+            producto.imagen = request.FILES['imagen']
+
+        producto.save()
+
+        tipoComidas= TipoComida.objects.all()
+        context = {"mensaje": "Se actualizó el producto", "tipoComidas": tipoComidas, "producto" : producto}
+        return render(request, 'pedido/productos_edit.html', context)
     else:
         lista_productos = Producto.objects.all()
-        context = {"productos":lista_productos}
-        return render(request,'venta/index.html',context)
+        context = {"lista_productos": lista_productos}
+        return render(request, 'pedido/productos_list.html', context)
+
+
 
 def crud(request):
     productos = Producto.objects.all()
     context = {'productos': productos}
-    return render(request, 'pedidos/productos_list.html', context)
+    return render(request, 'pedido/productos_list.html', context)
 
-def mostrar_productoss(request):
-    lista_producto = Orden.objects.all()
-    context = {"producto":lista_producto}
-    return render(request, 'pedido/productos',context)
+def TipoComida_list(request):
+
+    TipoComidas = TipoComida.objects.all()
+    context ={'TipoComidas':TipoComidas}
+    print("enviado datos Tipo comidas")
+    return render(request, "pedido/TipoComida_list.html", context)
+
+
+def TipoComidaAdd(request):
+    print("estoy en controlador TipoComidaAdd...")
+    context = {}
+
+    if request.method == "POST":
+        print("controlador es un post...")
+        form = TipoComidaForm(request.POST)
+        if form.is_valid():
+            print("estoy en agregar, is_valid")
+            form.save()
+            context = {"mensaje": "Ok, datos grabados...", "form": TipoComidaForm()}
+            return redirect('TipoComidaAdd')  # Redirigir a la página de agregar después de guardar el formulario
+    else:
+        form = TipoComidaForm()
+
+    context = {"form": form}
+    return render(request, 'pedido/TipoComidaAdd.html', context)
+
+        
+def TipoComida_del(request, pk):
+    mensajes=[]
+    errores=[]
+    tipoComidas = TipoComida.objects.all()
+    try:
+        tipoComida=TipoComida.objects.get(id_tipoComida=pk)
+        context={}
+        if tipoComida:
+            tipoComida.delete()
+            mensajes.append("Tipo de comida eliminada")
+            context = {'tipoComidas':tipoComidas, 'mensajes': mensajes, 'errores' : errores}
+            return render(request, 'pedido/TipoComida_list.html', context)
+    except:
+        print("Error, id no existe")
+        tipoComidas=TipoComida.object.all()
+        mensaje="Error, id no existe"
+        context={'mensaje': mensaje, 'tipoComidas':tipoComidas}
+
+def TipoComida_edit(request,pk):
+    try:
+        tipoComida=TipoComida.get(id_tipoComidas=pk)
+        context={}
+        if tipoComida:
+            print("Edit encontro el genero")
+            if request.method == "POST":
+                print("edit, es un POST")
+                form = TipoComidaForm(request.POST,instance=tipoComida)
+                form.save()
+                mensaje="Datos actualizados"
+                print(mensaje)
+                context={'tipoComida' :tipoComida, 'form': form, 'mensaje':mensaje }
+                return render(request, 'pedido/TipoComida_edit.html',context)
+            else:
+                form=TipoComidaForm(instance=tipoComida)
+                mensaje=""
+                context={'tipoComida' :tipoComida, 'form': form, 'mensaje':mensaje }
+                return render(request, 'pedido/TipoComida_edit.html',context)
+    except:
+        print("Error")
+        tipoComida=TipoComida.objects.all()
+        mensaje="Error"
+        context={'mensaje': mensaje,'tipoComida':tipoComida}
+        return render(request, 'pedido/TipoComida_list.html',context)

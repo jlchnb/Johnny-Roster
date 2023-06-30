@@ -48,11 +48,11 @@
           </li>
           <!-- {% url 'iniciar_sesion' %} -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown">
-              {% if usuario %}
-              {{ usuario }}
+            <a class="nav-link dropdown-toggle" href="admin" id="navbarDropdown">
+              {% if usuario != None %}
+                {{ usuario }}
               {% else %}
-              Login
+                Login
               {% endif %}
               <i class="fa fa-fw fa-sign-in" aria-hidden="true"></i></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -64,7 +64,10 @@
         </ul>
         <form class="d-flex">
           <button class="btn btn-outline-warning" type="button">
-            <a href="{% url 'productos_list' %}">Agregar</a>
+            <a href="{% url 'TipoComida_list' %}">Lista tipos</a>
+          </button>
+          <button class="btn btn-outline-warning" type="button">
+            <a href="{% url 'productos_list' %}">Lista Productos</a>
           </button>
         </form>
       </div>

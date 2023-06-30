@@ -27,10 +27,10 @@
                         <img class="img-fluid" src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
                     </div>
                     <p class="card-text text-white">Precio: ${{ producto.precio }}</p>
-                    <p class="card-text text-white">Tipo de comida: {{ producto.get_tipo_comida_display }}</p>
+                    <p class="card-text text-white">Tipo de comida: {{ producto.id_tipoComida.tipo_comida }}</p>
                 </div>
             </div>
-        </div>         
+        </div>    
         {% include 'pedido/footer.html' %}
 </body>
 
