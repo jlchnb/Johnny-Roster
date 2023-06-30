@@ -9,15 +9,27 @@ import os
 @login_required
 def inicio(request):
     request.session["usuario"]="julio"
-    usuario = request.session.get("usuario", None)
+    lista_productos = Producto.objects.all()
+    usuario = request.session["usuario"]
 
-    context = {'usuario':usuario}
+    context = {"lista_productos": lista_productos,'usuario':usuario}
     return render(request, 'pedido/navbar.html', context)
 
 def inicio_y_lista_productos(request):
     lista_productos = Producto.objects.all()
-    context={"lista_productos":lista_productos}
+    lista_tipoComida = TipoComida.objects.all()
+    productos_por_tipo_comida = {}
+
+    # Iterar sobre cada tipo de comida y filtrar los productos correspondientes
+    for tipo_comida in lista_tipoComida:
+        productos = lista_productos.filter(id_tipoComida=tipo_comida)
+        productos_por_tipo_comida[tipo_comida] = productos
+
+    context = {
+        "productos_por_tipo_comida": productos_por_tipo_comida
+    }
     return render(request, 'pedido/index.html', context)
+
 
 
 def lista_productos(request):
@@ -25,6 +37,7 @@ def lista_productos(request):
     context={"productos":lista_productos}
     return render(request, 'pedido/productos_list.html',context)
 
+@login_required
 def agregar_productos(request):
     if request.method != "POST":
         print(request.POST)
@@ -61,23 +74,6 @@ def agregar_productos(request):
         context = {"mensaje": "Se agregó el producto"}
         return render(request, 'pedido/agregar_productos.html', context)
 
-
-def iniciar_sesion(request):
-    error_message = None
-
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        
-        if user is not None:
-            login(request, user)
-            return redirect('inicio')
-        else:
-            error_message = "Error en el inicio de sesión. Verifica tus credenciales."
-    
-    return render(request, 'pedido/iniciar_sesion.html', {'error_message': error_message})
-    
 def detalle_producto(request, producto_nombre):
     producto = get_object_or_404(Producto, nombre=producto_nombre)
     choices_tipo_comida = TipoComida.objects.all()  # Obtener todos los objetos de TipoComida
@@ -88,22 +84,31 @@ def detalle_producto(request, producto_nombre):
     }
     return render(request, 'pedido/detalle_producto.html', context)
 
-def productos_del(request,pk):
-    context={}
+@login_required
+def productos_del(request, pk):
+    context = {}
     try:
         producto = Producto.objects.get(nombre=pk)
 
-        producto.delete()
-        mensaje = "Se eliminó el producto"
+        if request.method == "POST":
+            # Si el método es POST, significa que se confirmó la eliminación
+            producto.delete()
+            mensaje = "Se eliminó el producto"
+        else:
+            # Si el método no es POST, se muestra la confirmación en la plantilla
+            mensaje = "¿Estás seguro de eliminar el producto?"
+
         lista_productos = Producto.objects.all()
-        context={"lista_productos":lista_productos, "mensaje":mensaje}
-        return render(request,'pedido/productos_list.html',context)
-    except:
-        mensaje = "Error: NO se eliminó producto"
+        context = {"lista_productos": lista_productos, "mensaje": mensaje}
+        return render(request, 'pedido/productos_list.html', context)
+    except Producto.DoesNotExist:
+        mensaje = "Error: NO se encontró el producto"
         lista_productos = Producto.objects.all()
-        context={"lista_productos":lista_productos, "mensaje":mensaje}
-        return render(request,'pedido/productos_list.html',context)
+        context = {"lista_productos": lista_productos, "mensaje": mensaje}
+        return render(request, 'pedido/productos_list.html', context)
+
     
+@login_required
 def productos_edit(request,pk):
 
     if pk != "":
@@ -116,20 +121,18 @@ def productos_edit(request,pk):
         else:
             context = {"mensaje":"El producto no existe"}
             return render(request,'pedido/productos_edit.html',context)
-        
+
+@login_required
 def actualizar_productos(request):
-
     if request.method == "POST":
-
         nombre = request.POST["nombre"]
         precio = request.POST["precio"]
         tipo_comida = request.POST["tipo_comida"]
         activo = "1"
 
-        objTipoComida=TipoComida.objects.get(id_tipoComida = tipo_comida)
+        objTipoComida = TipoComida.objects.get(id_tipoComida=tipo_comida)
 
-        producto = Producto()
-        producto.nombre = nombre
+        producto = Producto.objects.get(nombre=nombre)  # Obtener el producto existente por su nombre
         producto.precio = precio
         producto.id_tipoComida = objTipoComida
         producto.activo = 1
@@ -139,21 +142,21 @@ def actualizar_productos(request):
 
         producto.save()
 
-        tipoComidas= TipoComida.objects.all()
-        context = {"mensaje": "Se actualizó el producto", "tipoComidas": tipoComidas, "producto" : producto}
+        tipoComidas = TipoComida.objects.all()
+        context = {"mensaje": "Se actualizó el producto", "tipoComidas": tipoComidas, "producto": producto}
         return render(request, 'pedido/productos_edit.html', context)
     else:
         lista_productos = Producto.objects.all()
         context = {"lista_productos": lista_productos}
         return render(request, 'pedido/productos_list.html', context)
 
-
-
+@login_required
 def crud(request):
     productos = Producto.objects.all()
     context = {'productos': productos}
     return render(request, 'pedido/productos_list.html', context)
 
+@login_required
 def TipoComida_list(request):
 
     TipoComidas = TipoComida.objects.all()
@@ -161,7 +164,7 @@ def TipoComida_list(request):
     print("enviado datos Tipo comidas")
     return render(request, "pedido/TipoComida_list.html", context)
 
-
+@login_required
 def TipoComidaAdd(request):
     print("estoy en controlador TipoComidaAdd...")
     context = {}
@@ -180,7 +183,7 @@ def TipoComidaAdd(request):
     context = {"form": form}
     return render(request, 'pedido/TipoComidaAdd.html', context)
 
-        
+@login_required        
 def TipoComida_del(request, pk):
     mensajes=[]
     errores=[]
@@ -199,6 +202,7 @@ def TipoComida_del(request, pk):
         mensaje="Error, id no existe"
         context={'mensaje': mensaje, 'tipoComidas':tipoComidas}
 
+@login_required
 def TipoComida_edit(request,pk):
     try:
         tipoComida=TipoComida.get(id_tipoComidas=pk)

@@ -5,40 +5,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Productos</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: inline-block;
+            text-align: left;
+        }
+
+        pre {
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="file"] {
+            margin-top: 5px;
+        }
+
+        #idMensajes {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #4caf50;
+        }
+    </style>
 </head>
 
 <body>
-    <div style="text-align: center;">
-        {% if producto %}
-        <h2>Formulario Actualizar Datos</h2><br>
-        <form action="{% url 'actualizar_productos' %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <pre>Nombre:   <input type="text" name="nombre" value="{{ producto.nombre }}"></pre>
-            <pre>Precio:   <input type="text" name="precio" value="{{ producto.precio }}"></pre>
-            <pre>Tipo de comida:
-                <select name="tipo_comida">
-                {% for tipo_comida in tipoComidas %}
+    {% if producto %}
+    <h2>Formulario Actualizar Datos</h2>
+    <form action="{% url 'actualizar_productos' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <pre>Nombre:   <input type="text" name="nombre" value="{{ producto.nombre }}" readonly></pre>
 
-                    {% if tipo_comida.tipo_comida == producto.id_tipoComida.tipo_comida %}
-                        <option value="{{tipo_comida.id_tipoComida}}" selected>{{tipo_comida.tipo_comida}}</option>
-                    {% else %}
-                        <option value="{{tipo_comida.id_tipoComida}}" >{{tipo_comida.tipo_comida}}</option>
-                    {% endif %}
+        <pre>Precio:   <input type="text" name="precio" value="{{ producto.precio }}"></pre>
+        <pre>Tipo de comida:
+            <select name="tipo_comida">
+                {% for tipo_comida in tipoComidas %}
+                {% if tipo_comida.tipo_comida == producto.id_tipoComida.tipo_comida %}
+                <option value="{{tipo_comida.id_tipoComida}}" selected>{{tipo_comida.tipo_comida}}</option>
+                {% else %}
+                <option value="{{tipo_comida.id_tipoComida}}">{{tipo_comida.tipo_comida}}</option>
+                {% endif %}
                 {% endfor %}
-                </select>
-            </pre>
-            <pre>Imagen:   <input type="file" name="imagen"></pre>
-            <input type="submit" name="opcion" value="Actualizar">
-        </form><br><br>
+            </select>
+        </pre>
+        <pre>Imagen:   <input type="file" name="imagen"></pre>
+        <input type="submit" value="Actualizar">
+    </form>
+    {% endif %}
+    <div id="idMensajes">
+        {% if mensaje %}
+        {{mensaje}}
         {% endif %}
-        <div id="idMensajes">
-            {% if mensaje %}
-            {{mensaje}}
-            {% endif %}
-        </div>
-        <br><br>
-        <a href="{% url 'crud' %}"> Volver </a>
     </div>
+    <a href="{% url 'crud' %}"> Volver </a>
 </body>
 
 </html>
+

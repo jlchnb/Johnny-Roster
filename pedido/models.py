@@ -5,7 +5,7 @@ from django.db import models
 
 class Producto(models.Model):
     nombre = models.CharField(primary_key=True,max_length=100)
-    imagen = models.ImageField(upload_to='productos')
+    imagen = models.ImageField(upload_to='productos/')
     id_tipoComida = models.ForeignKey('TipoComida',on_delete=models.CASCADE, db_column='idTipoComida')
     precio = models.IntegerField()
     activo = models.IntegerField()

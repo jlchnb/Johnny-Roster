@@ -79,9 +79,10 @@
       <!-- Contenido de la pagina -->
 
       <!-- Broaster Burgers -->
-      <h1 class="display-1 text-center pt-5">Broaster Burgers</h1>
+      {% for tipo_comida, productos in productos_por_tipo_comida.items %}
+      <h1 class="display-1 text-center pt-5">{{ tipo_comida }}</h1>
       <div class="container-08 padding-gral d-flex flex-row">
-        {% for producto in lista_productos %}
+        {% for producto in productos %}
         {% if forloop.counter0|divisibleby:3 %}
       </div>
       <div class="container-08 padding-gral d-flex flex-row">
@@ -94,57 +95,7 @@
         </div>
         {% endfor %}
       </div>
-
-      <!-- 100% Carne Burgers -->
-      <h1 class="display-1 text-center pt-5">100% Carne Burgers</h1>
-      <div class="container-08 padding-gral d-flex flex-row">
-        {% for producto in lista_productos %}
-        {% if forloop.counter0|divisibleby:3 %}
-      </div>
-      <div class="container-08 padding-gral d-flex flex-row">
-        {% endif %}
-        <div>
-          <a href="{% url 'detalle_producto' producto_nombre=producto.nombre %}">
-            <img class="cardImg" src="{{ producto.imagen.url }}" alt="Burgir">
-          </a>
-          <h2 class="card-title text-center">{{ producto.nombre|title }}</h2>
-        </div>
-        {% endfor %}
-      </div>
-
-      <!-- Vegetariana Burgers -->
-      <h1 class="display-1 text-center pt-5">Vegetariana Burgers</h1>
-      <div class="container-08 padding-gral d-flex flex-row">
-        {% for producto in lista_productos %}
-        {% if forloop.counter0|divisibleby:3 %}
-      </div>
-      <div class="container-08 padding-gral d-flex flex-row">
-        {% endif %}
-        <div>
-          <a href="{% url 'detalle_producto' producto_nombre=producto.nombre %}">
-            <img class="cardImg" src="{{ producto.imagen.url }}" alt="Burgir">
-          </a>
-          <h2 class="card-title text-center">{{ producto.nombre|title }}</h2>
-        </div>
-        {% endfor %}
-      </div>
-
-      <!-- Acompañamiento Burgers -->
-      <h1 class="display-1 text-center pt-5">Acompañamiento</h1>
-      <div class="container-08 padding-gral d-flex flex-row">
-        {% for producto in lista_productos %}
-        {% if forloop.counter0|divisibleby:3 %}
-      </div>
-      <div class="container-08 padding-gral d-flex flex-row">
-        {% endif %}
-        <div>
-          <a href="{% url 'detalle_producto' producto_nombre=producto.nombre %}">
-            <img class="cardImg" src="{{ producto.imagen.url }}" alt="Burgir">
-          </a>
-          <h2 class="card-title text-center">{{ producto.nombre|title }}</h2>
-        </div>
-        {% endfor %}
-      </div>
+      {% endfor %}
 
       <!-- Footer -->
       {% include 'pedido/footer.html' %}

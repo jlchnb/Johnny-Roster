@@ -25,20 +25,15 @@
             <img src="{% static 'Images/burger-patron.jpg' %}" class="patron-imagen">
             <div class="card-body p-4 p-md-5">
               <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2 text-center">Iniciar sesion</h3>
-              <form class="px-md-2"  action="" method="post">
+              <form class="px-md-2" action="" method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit">Login</button>
+                <button class="btn btn-warning btn-lg mb-1" type="submit">Login</button>
               </form>
             </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-warning btn-lg mb-1" onclick="validar()">Enviar</button>
-        </form>
       </div>
-    </div>
-    </div>
-    </div>
     </div>
   </section>
 </body>
