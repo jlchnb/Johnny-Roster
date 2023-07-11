@@ -35,7 +35,7 @@
       {% include 'pedido/navbar.html' %}
       <!-- Header -->
       <div class="titulo">
-        <h1 class="texto-banner">HAMBURGUESAS</h1>
+        <h1 class="texto-banner">BIENVENIDO</h1>
       </div>
       <!-- Carrusel -->
       <div id="carrusel">
@@ -87,16 +87,21 @@
       </div>
       <div class="container-08 padding-gral d-flex flex-row">
         {% endif %}
-        <div>
+        <div class="d-flex flex-column align-items-center">
           <a href="{% url 'detalle_producto' producto_nombre=producto.nombre %}">
-            <img class="cardImg" src="{{ producto.imagen.url }}" alt="Burgir">
+            <img class="cardImg" src="{{ producto.imagen.url }}" alt="Burger">
           </a>
           <h2 class="card-title text-center">{{ producto.nombre|title }}</h2>
+          <h3 class="card-price text-center">${{ producto.precio }}</h3>
+          <form>
+            {% csrf_token %}
+            <button class="btn btn-warning btn-lg text-center agregar-carrito-btn" data-producto-nombre="{{ producto.nombre }}">Agregar al carrito</button>
+          </form>
         </div>
+
         {% endfor %}
       </div>
       {% endfor %}
-
       <!-- Footer -->
       {% include 'pedido/footer.html' %}
     </div>
@@ -106,6 +111,31 @@
   <script>
     $(document).ready(function () {
       $("#idMensajes").delay(2000).fadeOut("slow");
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $('.agregar-carrito-btn').click(function (event) {
+        event.preventDefault();
+
+        var productoNombre = $(this).data('producto-nombre');
+        var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+
+        $.ajax({
+          url: '/agregar/' + productoNombre + '/',
+          type: 'POST',
+          dataType: 'json',
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', csrfToken);
+          },
+          success: function (response) {
+            alert(response.message);
+          },
+          error: function (xhr, status, error) {
+            console.error(error);
+          }
+        });
+      });
     });
   </script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"

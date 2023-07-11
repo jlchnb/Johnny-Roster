@@ -1,39 +1,44 @@
-body {
+/* Estilos para el cuerpo */
+.my-body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-h1 {
+/* Estilos para el encabezado h1 */
+.my-heading {
     text-align: center;
     margin-top: 20px;
 }
 
-table {
+/* Estilos para la tabla */
+.my-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-th,
-td {
+.my-table th,
+.my-table td {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-th {
+.my-table th {
     background-color: #f2f2f2;
 }
 
-img {
+/* Estilos para las imágenes */
+.my-image {
     max-width: 50px;
     max-height: 50px;
     display: block;
     margin: auto;
 }
 
-button {
+/* Estilos para el botón */
+.my-button {
     margin: 20px auto;
     display: block;
     background-color: #4CAF50;
@@ -47,20 +52,22 @@ button {
     border-radius: 5px;
 }
 
-button a {
+.my-button a {
     color: white;
     text-decoration: none;
 }
 
-button:hover {
+.my-button:hover {
     background-color: #45a049;
 }
 
-form {
+/* Estilos para el formulario */
+.my-form {
     display: inline;
 }
 
-#idMensajes {
+/* Estilos para los mensajes */
+.my-messages {
     text-align: center;
     margin-top: 10px;
 }

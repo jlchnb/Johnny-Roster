@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    path('', views.inicio_y_lista_productos, name=''),
+    path('', views.inicio_y_lista_productos, name='index'),
     path('navbar/', views.inicio,name='navbar'),
     path('productos_list/', views.lista_productos, name='productos_list'),
     path('agregar_productos/', views.agregar_productos, name='agregar_productos'),
@@ -20,6 +20,15 @@ urlpatterns = [
     path('TipoComida_del/<str:pk>/', views.TipoComida_del, name='TipoComida_del'),
     path('TipoComida_edit/<str:pk>/', views.TipoComida_edit, name='TipoComida_edit'),
     
+    path('carrito/', views.Carrito_list, name='carrito'),
+    path('agregar/<str:producto_nombre>/', views.agregar_carrito, name="Add"),
+    path('eliminar/<str:producto_nombre>/', views.eliminar_producto, name="Del"),
+    path('restar/<str:producto_nombre>/', views.restar_producto, name="Sub"),
+    path('limpiar/', views.limpiar_carrito, name="Clean"),
+
+
+
+    path('logout/', views.cerrar_sesion, name='cerrar_sesion'),
     path("admin/", admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
 ]

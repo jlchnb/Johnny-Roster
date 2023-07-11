@@ -1,26 +1,33 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from pedido.models import Producto, TipoComida
+from django.urls import reverse
+from django.contrib import messages
 from .forms import TipoComidaForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from pedido.Carrito import Carrito
+from django.http import JsonResponse
 import os
 
 @login_required
 def inicio(request):
-    request.session["usuario"]="julio"
     lista_productos = Producto.objects.all()
-    usuario = request.session["usuario"]
+    usuario = request.session.get("usuario", None)
 
-    context = {"lista_productos": lista_productos,'usuario':usuario}
+    context = {"lista_productos": lista_productos, 'usuario': usuario}
     return render(request, 'pedido/navbar.html', context)
+
+@login_required
+def cerrar_sesion(request):
+    logout(request)
+    return redirect('index')
 
 def inicio_y_lista_productos(request):
     lista_productos = Producto.objects.all()
     lista_tipoComida = TipoComida.objects.all()
     productos_por_tipo_comida = {}
 
-    # Iterar sobre cada tipo de comida y filtrar los productos correspondientes
     for tipo_comida in lista_tipoComida:
         productos = lista_productos.filter(id_tipoComida=tipo_comida)
         productos_por_tipo_comida[tipo_comida] = productos
@@ -31,11 +38,46 @@ def inicio_y_lista_productos(request):
     return render(request, 'pedido/index.html', context)
 
 
+def Carrito_list(request):
+    return render(request, 'pedido/carrito.html')
 
+@login_required
 def lista_productos(request):
     lista_productos = Producto.objects.all()
     context={"productos":lista_productos}
     return render(request, 'pedido/productos_list.html',context)
+
+
+def agregar_carrito(request, producto_nombre):
+    carrito = Carrito(request)
+    producto = Producto.objects.get(nombre=producto_nombre)
+    carrito.agregar(producto)
+    
+    if request.META.get('HTTP_REFERER') == 'http://127.0.0.1:8000/':
+        return JsonResponse({'message': 'Producto agregado al carrito'})
+    
+    return redirect("carrito")
+
+
+def eliminar_producto(request, producto_nombre):
+    carrito = Carrito(request)
+    producto = Producto.objects.get(nombre=producto_nombre)
+    carrito.eliminar(producto)
+    return redirect("index")
+
+
+def restar_producto(request, producto_nombre):
+    carrito = Carrito(request)
+    producto = Producto.objects.get(nombre=producto_nombre)
+    carrito.restar(producto)
+    return redirect("carrito")
+
+
+def limpiar_carrito(request):
+    carrito = Carrito(request)
+    carrito.limpiar()
+    return redirect("carrito")
+
 
 @login_required
 def agregar_productos(request):
@@ -228,3 +270,4 @@ def TipoComida_edit(request,pk):
         mensaje="Error"
         context={'mensaje': mensaje,'tipoComida':tipoComida}
         return render(request, 'pedido/TipoComida_list.html',context)
+    

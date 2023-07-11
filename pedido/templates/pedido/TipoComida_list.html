@@ -50,12 +50,18 @@
             {% endfor %}
         {% endif %}
     </table>
+    <button class="my-button" type="button">
+        <a href="{% url 'index' %}">Volver</a>
+    </button>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
             $("#idMensajes").delay(2000).fadeOut("slow");
         });
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

@@ -5,24 +5,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'CSS/home.css' %}">
     <link rel="stylesheet" href="{% static 'CSS/contacto.css' %}">
     <title>Editar productos</title>
 </head>
 
-<body>
+<body class="my-body">
     {% include 'pedido/navbar.html' %}
-    <h1>Editar Datos de Alumnos</h1><br>
+    <h1 class="my-heading">Editar Datos de Alumnos</h1><br>
     <br>
 
-    <button type="button">
+    <button class="my-button" type="button">
         <a href="{% url 'agregar_productos' %}">Agregar un producto</a>
     </button>
 
-    <div id="idMensajes">
+    <div id="idMensajes" class="my-messages">
         {% if mensaje %}
         {{mensaje}}
         {% endif %}
@@ -36,7 +35,7 @@
             padding: 10px;
         }
     </style>
-    <table>
+    <table class="my-table">
         {% if productos %}
         <th>Imagen</th>
         <th>Nombre</th>
@@ -45,21 +44,26 @@
         <th>Modificar</th>
         {% for x in productos %}
         <tr>
-            <td><img src="{{x.imagen.url}}" alt="Imagen del producto" height="50px" width="50px"></td>
+            <td><img src="{{x.imagen.url}}" alt="Imagen del producto" class="my-image"></td>
             <td> {{x.nombre}}</td>
             <td> ${{x.precio}}.00</td>
-            <td> <a href="{% url 'productos_del' pk=x.nombre %}">Eliminar</a></td>
-            <td> <a href="{% url 'productos_edit' pk=x.nombre %}">Modificar</a></td>
+            <td> <a href="{% url 'productos_del' pk=x.nombre %}" class="my-link">Eliminar</a></td>
+            <td> <a href="{% url 'productos_edit' pk=x.nombre %}" class="my-link">Modificar</a></td>
         </tr>
         {% endfor %}
         {% endif %}
     </table>
+    <button class="my-button" type="button">
+        <a href="{% url 'index' %}">Volver</a>
+    </button>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
             $("#idMensajes").delay(2000).fadeOut("slow");
         });
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
